@@ -1,0 +1,109 @@
+{
+  "_note": "Synthetic raw telemetry. The raw_id and internal_addr fields below are deliberate: they are NOT on the whitelist and must never reach the sanitized snapshot. If they ever surfaced downstream the forbidden-token screen would trip on internal_addr.",
+  "captured_at": "2026-07-13T07:32:00Z",
+  "fleet": {
+    "components": [
+      {
+        "role": "execution",
+        "raw_id": "node-7f3a2c",
+        "internal_addr": "10.0.0.11",
+        "status": "running",
+        "engines_running": 2,
+        "engines_configured": 2,
+        "uptime_seconds": 864000,
+        "last_heartbeat": "2026-07-13T07:31:50Z",
+        "heartbeat": { "expected": 288, "received": 288 }
+      },
+      {
+        "role": "execution",
+        "raw_id": "node-91b0de",
+        "internal_addr": "10.0.0.12",
+        "status": "running",
+        "engines_running": 2,
+        "engines_configured": 2,
+        "uptime_seconds": 864000,
+        "last_heartbeat": "2026-07-13T07:31:48Z",
+        "heartbeat": { "expected": 288, "received": 288 }
+      },
+      {
+        "role": "execution",
+        "raw_id": "node-c4d5e6",
+        "internal_addr": "10.0.0.13",
+        "status": "running",
+        "engines_running": 1,
+        "engines_configured": 1,
+        "uptime_seconds": 864000,
+        "last_heartbeat": "2026-07-13T07:31:45Z",
+        "heartbeat": { "expected": 288, "received": 288 }
+      },
+      {
+        "role": "observer",
+        "raw_id": "node-obs-2210",
+        "internal_addr": "10.0.0.20",
+        "status": "running",
+        "engines_running": 0,
+        "engines_configured": 0,
+        "uptime_seconds": 864000,
+        "last_heartbeat": "2026-07-13T07:31:38Z",
+        "heartbeat": { "expected": 96, "received": 96 }
+      }
+    ]
+  },
+  "heartbeats": {
+    "window_hours": 24,
+    "interval_seconds": 300
+  },
+  "reconciliation": {
+    "window_hours": 168,
+    "accounts_per_run": 5,
+    "runs": [
+      { "at": "2026-07-07T06:00:00Z", "status": "ALL_VERIFIED" },
+      { "at": "2026-07-08T06:00:00Z", "status": "ALL_VERIFIED" },
+      { "at": "2026-07-09T06:00:00Z", "status": "ALL_VERIFIED" },
+      { "at": "2026-07-10T06:00:00Z", "status": "ALL_VERIFIED" },
+      { "at": "2026-07-11T06:00:00Z", "status": "ALL_VERIFIED" },
+      { "at": "2026-07-12T06:00:00Z", "status": "ALL_VERIFIED" },
+      { "at": "2026-07-13T06:00:00Z", "status": "ALL_VERIFIED" }
+    ]
+  },
+  "alerts": {
+    "window_hours": 48,
+    "events": [
+      {
+        "alert_class": "resource_pressure_critical",
+        "component_index": 1,
+        "severity": "critical",
+        "paged": true,
+        "raised_at": "2026-07-13T07:10:00Z",
+        "recovered_at": "2026-07-13T07:20:00Z",
+        "dedup_suppressed": 3
+      },
+      {
+        "alert_class": "heartbeat_late_warning",
+        "component_index": 2,
+        "severity": "warning",
+        "paged": false,
+        "raised_at": "2026-07-12T18:04:00Z",
+        "recovered_at": "2026-07-12T18:09:00Z",
+        "dedup_suppressed": 0
+      }
+    ]
+  },
+  "audit": {
+    "window_hours": 24,
+    "by_class": [
+      { "event_class": "heartbeat_write", "count": 864 },
+      { "event_class": "health_probe", "count": 576 },
+      { "event_class": "reconciliation_check", "count": 35 },
+      { "event_class": "alert_lifecycle", "count": 25 }
+    ]
+  },
+  "topology": {
+    "watchdogs": [
+      { "watchdog": "heartbeat_monitor", "scope": "all execution hosts", "state": "armed" },
+      { "watchdog": "reconciliation_monitor", "scope": "account verification", "state": "armed" },
+      { "watchdog": "resource_monitor", "scope": "per execution host", "state": "armed" },
+      { "watchdog": "observer_sentinel", "scope": "independent cross-check", "state": "armed" }
+    ]
+  }
+}

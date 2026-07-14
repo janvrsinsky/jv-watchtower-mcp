@@ -1,0 +1,4 @@
+# Runtime dependency for serving the read-only ops console over MCP.
+# The offline frame check (test_flow.py) runs on the standard library alone;
+# fastmcp is only needed to actually start the server (python mcp_server.py).
+fastmcp>=2.0

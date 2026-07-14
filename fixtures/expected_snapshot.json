@@ -1,0 +1,165 @@
+{
+  "snapshot_meta": {
+    "generated_at": "2026-07-13T07:32:00Z",
+    "window_hours": 24,
+    "schema": "watchtower-ops-v1"
+  },
+  "fleet": {
+    "components": [
+      {
+        "component": "exec-host-a",
+        "role": "execution",
+        "status": "running",
+        "engines_running": 2,
+        "engines_configured": 2,
+        "uptime_hours": 240
+      },
+      {
+        "component": "exec-host-b",
+        "role": "execution",
+        "status": "running",
+        "engines_running": 2,
+        "engines_configured": 2,
+        "uptime_hours": 240
+      },
+      {
+        "component": "exec-host-c",
+        "role": "execution",
+        "status": "running",
+        "engines_running": 1,
+        "engines_configured": 1,
+        "uptime_hours": 240
+      },
+      {
+        "component": "observer",
+        "role": "observer",
+        "status": "running",
+        "engines_running": 0,
+        "engines_configured": 0,
+        "uptime_hours": 240
+      }
+    ],
+    "engines_running_total": 5,
+    "engines_configured_total": 5
+  },
+  "heartbeats": {
+    "window_hours": 24,
+    "interval_seconds": 300,
+    "per_component": [
+      {
+        "component": "exec-host-a",
+        "expected": 288,
+        "received": 288,
+        "coverage_pct": 100.0,
+        "last_age_seconds": 10
+      },
+      {
+        "component": "exec-host-b",
+        "expected": 288,
+        "received": 288,
+        "coverage_pct": 100.0,
+        "last_age_seconds": 12
+      },
+      {
+        "component": "exec-host-c",
+        "expected": 288,
+        "received": 288,
+        "coverage_pct": 100.0,
+        "last_age_seconds": 15
+      },
+      {
+        "component": "observer",
+        "expected": 96,
+        "received": 96,
+        "coverage_pct": 100.0,
+        "last_age_seconds": 22
+      }
+    ]
+  },
+  "reconciliation": {
+    "window_hours": 168,
+    "runs": 7,
+    "consecutive_verified": 7,
+    "latest_status": "ALL_VERIFIED",
+    "accounts_checked_per_run": 5,
+    "last_run_at": "2026-07-13T06:00:00Z"
+  },
+  "alerts": {
+    "window_hours": 48,
+    "total": 2,
+    "paged": 1,
+    "log_only": 1,
+    "events": [
+      {
+        "alert_class": "resource_pressure_critical",
+        "component": "exec-host-b",
+        "severity": "critical",
+        "paged": true,
+        "raised_at": "2026-07-13T07:10:00Z",
+        "recovered_at": "2026-07-13T07:20:00Z",
+        "recovery_minutes": 10,
+        "dedup_suppressed": 3
+      },
+      {
+        "alert_class": "heartbeat_late_warning",
+        "component": "exec-host-c",
+        "severity": "warning",
+        "paged": false,
+        "raised_at": "2026-07-12T18:04:00Z",
+        "recovered_at": "2026-07-12T18:09:00Z",
+        "recovery_minutes": 5,
+        "dedup_suppressed": 0
+      }
+    ]
+  },
+  "audit": {
+    "window_hours": 24,
+    "total_events": 1500,
+    "by_class": [
+      {
+        "event_class": "heartbeat_write",
+        "count": 864
+      },
+      {
+        "event_class": "health_probe",
+        "count": 576
+      },
+      {
+        "event_class": "reconciliation_check",
+        "count": 35
+      },
+      {
+        "event_class": "alert_lifecycle",
+        "count": 25
+      }
+    ]
+  },
+  "topology": {
+    "components": 4,
+    "execution_hosts": 3,
+    "observers": 1,
+    "engines": 5,
+    "watchdogs": [
+      {
+        "watchdog": "heartbeat_monitor",
+        "scope": "all execution hosts",
+        "state": "armed"
+      },
+      {
+        "watchdog": "reconciliation_monitor",
+        "scope": "account verification",
+        "state": "armed"
+      },
+      {
+        "watchdog": "resource_monitor",
+        "scope": "per execution host",
+        "state": "armed"
+      },
+      {
+        "watchdog": "observer_sentinel",
+        "scope": "independent cross-check",
+        "state": "armed"
+      }
+    ]
+  }
+}
