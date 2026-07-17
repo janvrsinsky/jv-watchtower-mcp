@@ -4,6 +4,10 @@
 
 **A read-only MCP operations console for a 24/7 algorithmic trading fleet.** One plain-language question fans out into six tool calls and comes back as an SRE brief. The sanitization that keeps trading data out of the agent lives in code, not in the prompt. What ships in this repo is a sanitized, runnable sample of that design, driven by synthetic fixtures.
 
+**▶ [Watch it run a daily ops review, then refuse to reveal the strategy](#demos)**  
+One plain-language question, six tool calls, one SRE brief; then a structural refusal when the operator asks what the fleet is trading.
+
+![monitors](https://img.shields.io/badge/monitors-live%2024%2F7%20trading%20fleet-2ea44f)
 ![status](https://img.shields.io/badge/status-sanitized%20sample-2ea44f)
 ![access](https://img.shields.io/badge/access-read--only-blue)
 ![python](https://img.shields.io/badge/python-3.11-3776ab)
@@ -12,6 +16,7 @@
 ![guardrails](https://img.shields.io/badge/guardrails-forbidden--token%20screen-orange)
 ![observability](https://img.shields.io/badge/observability-heartbeats%20%C2%B7%20reconciliation-informational)
 ![safety](https://img.shields.io/badge/live%20trades-never%20touched-lightgrey)
+![tools](https://img.shields.io/badge/MCP%20tools-6%20typed%20read--only-6e40c9) ![screens](https://img.shields.io/badge/leak%20screens-2%20fail--closed-critical) ![isolation](https://img.shields.io/badge/strategy%20isolation-3%20walls%20deep-blueviolet)
 
 ---
 
@@ -105,7 +110,7 @@ I work AI-first, directing AI coding tools to generate and refactor the implemen
 
 ## Status and contact
 
-**Sanitized public extract.** The console runs over a trading system I have operated 24/7 for months. This repository ships the guardrail architecture and the tooling shape running on synthetic fixtures, with none of the private internals.
+**Sanitized public extract.** The console runs over a trading system I have operated 24/7 for months. This repository ships the actual guardrail code (the sanitizer, both fail-closed leak screens, and all six MCP tools), running on synthetic fixtures, with only the host-side pull as a skeleton and none of the private internals.
 
 Part of a portfolio of production AI systems. More at **[github.com/janvrsinsky](https://github.com/janvrsinsky)**.
 
