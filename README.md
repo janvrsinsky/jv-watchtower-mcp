@@ -16,15 +16,15 @@ One plain-language question, six tool calls, one SRE brief; then a structural re
 ![guardrails](https://img.shields.io/badge/guardrails-forbidden--token%20screen-orange)
 ![observability](https://img.shields.io/badge/observability-heartbeats%20%C2%B7%20reconciliation-informational)
 ![safety](https://img.shields.io/badge/live%20trades-never%20touched-lightgrey)
-![tools](https://img.shields.io/badge/MCP%20tools-6%20typed%20read--only-6e40c9) ![screens](https://img.shields.io/badge/leak%20screens-2%20fail--closed-critical) ![isolation](https://img.shields.io/badge/strategy%20isolation-3%20walls%20deep-blueviolet)
+![tools](https://img.shields.io/badge/MCP%20tools-6%20typed%20read--only-6e40c9) ![screens](https://img.shields.io/badge/leak%20screens-2%20fail--closed-critical) ![isolation](https://img.shields.io/badge/strategy%20isolation-3%20independent%20safeguards-blueviolet)
 
 ---
 
 ## What it is
 
-Quant Watchtower is the monitoring surface for a trading system I designed and operate, which runs unattended across multiple venues around the clock. It is a read-only console: it can observe, verify, and report, but it cannot trade, change configuration, or read a single trade. An agent reaches the fleet only through six typed MCP tools, and everything those tools return is drawn from a sanitized snapshot. This public repo runs that same pipeline on synthetic fixtures, so it is fully runnable without touching anything private.
+Quant Watchtower is the monitoring surface for a trading system I designed and operate, which runs unattended around the clock. It is a read-only console: it can observe, verify, and report, but it cannot trade, change configuration, or read a single trade. An agent reaches the fleet only through six typed MCP tools, and everything those tools return is drawn from a sanitized snapshot. This public repo runs that same pipeline on synthetic fixtures, so it is fully runnable without touching anything private.
 
-The interesting part is not that an agent can summarize logs. It is that the boundary between "operational health" and "how the system actually trades" is enforced in the data layer, three walls deep, so the agent is structurally incapable of leaking the strategy even if asked directly.
+The interesting part is not that an agent can summarize logs. It is that the boundary between "operational health" and "how the system actually trades" is enforced in the data layer, behind three independent safeguards, so the agent is structurally incapable of leaking the strategy even if asked directly.
 
 ## What ships here, and what is sanitized
 
@@ -64,7 +64,7 @@ The architecture is a short list of design decisions, each aimed at making a lea
 
 ```mermaid
 flowchart TB
-    subgraph LIVE["Live trading fleet (24/7, multiple venues)"]
+    subgraph LIVE["Live trading fleet (24/7)"]
       H["Execution hosts + independent observer"]
     end
 
