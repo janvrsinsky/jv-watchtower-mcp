@@ -1,0 +1,30 @@
+name: leak scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  scan:
+    name: leak scan, Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Nothing is installed on purpose. test_flow.py runs every tool, scans the
+      # whole surface for venue, symbol, amount, threshold, path and host names,
+      # and checks the fail-closed branch, all on the standard library alone.
+      - name: Run the pre-record leak scan
+        run: python test_flow.py

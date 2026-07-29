@@ -7,6 +7,8 @@
 **▶ [Watch it run a daily ops review, then refuse to reveal the strategy](#demos)**  
 One plain-language question, six tool calls, one SRE brief; then a structural refusal when the operator asks what the fleet is trading.
 
+[![leak scan](https://github.com/janvrsinsky/jv-watchtower-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/janvrsinsky/jv-watchtower-mcp/actions/workflows/ci.yml)
+
 ![monitors](https://img.shields.io/badge/monitors-live%2024%2F7%20trading%20fleet-2ea44f)
 ![status](https://img.shields.io/badge/status-sanitized%20sample-2ea44f)
 ![access](https://img.shields.io/badge/access-read--only-blue)
@@ -99,7 +101,7 @@ For a console over a live money-handling system, "correct" means two things: the
 
 - **Two independent screens, both fail-closed.** The sanitizer refuses to write a leaking snapshot, and the server refuses to return a leaking tool output. Neither degrades gracefully into a leak; both stop.
 - **A whitelist floor.** Because the snapshot is built from an allowlist, a newly added upstream field is invisible by default until someone explicitly permits it. The failure mode is missing data, never surprise disclosure.
-- **A pre-record frame check.** `test_flow.py` runs every tool, concatenates the outputs with the system prompt, and scans the whole surface for any venue, symbol, amount, threshold, path, or host name. It has to report a clean pass before a single frame is captured.
+- **A pre-record frame check.** `test_flow.py` runs every tool, concatenates the outputs with the system prompt, and scans the whole surface for any venue, symbol, amount, threshold, path, or host name. It has to report a clean pass before a single frame is captured, and GitHub Actions runs the same scan on every push.
 - **A structural boundary, tested.** The "what is it trading?" refusal is verified to hold because the data is genuinely absent from the snapshot, not because the model was asked nicely to decline.
 
 This mirrors the discipline the underlying trading system runs on: never trust a single source, fail loud, and prefer a bounded, obvious failure over a quiet one.
@@ -110,7 +112,7 @@ I work AI-first, directing AI coding tools to generate and refactor the implemen
 
 ## Status and contact
 
-**Sanitized public extract.** The console runs over a trading system I have operated 24/7 for months. This repository ships the actual guardrail code (the sanitizer, both fail-closed leak screens, and all six MCP tools), running on synthetic fixtures, with only the host-side pull as a skeleton and none of the private internals.
+**Sanitized public extract.** The console runs over a trading system I have operated 24/7 since 2023. This repository ships the actual guardrail code (the sanitizer, both fail-closed leak screens, and all six MCP tools), running on synthetic fixtures, with only the host-side pull as a skeleton and none of the private internals.
 
 Part of a portfolio of production AI systems. More at **[github.com/janvrsinsky](https://github.com/janvrsinsky)**.
 
