@@ -1,0 +1,19 @@
+Negative control for leak_scan.py.
+
+Every value in this file is fake and marked as an example; nothing here is or
+ever was a real credential. The repo-wide scan excludes this file from the tree
+walk and then scans it directly: the run fails unless every pattern below is
+caught. That makes the CI gate demonstrably able to fail.
+
+credential-assignment:    api_key = "EXAMPLEVALUE0000"
+private-key-block:        -----BEGIN EXAMPLE PRIVATE KEY-----
+                          THIS IS NOT A KEY (EXAMPLE ONLY)
+                          -----END EXAMPLE PRIVATE KEY-----
+cloud-access-key-id:      AKIAIOSFODNN7EXAMPLE (the documentation example key)
+repo-host-token:          ghp_EXAMPLEEXAMPLEEXAMPLEEXAMPLEEXAMPLE0
+chat-token:               xoxb-EXAMPLE-EXAMPLE-EXAMPLE
+secret-key-token:         sk-EXAMPLEEXAMPLEEXAMPLE0
+private-network-address:  10.0.0.99 and 192.168.0.1 (RFC 1918 examples)
+machine-path:             /Users/example-user/example-vault/notes.md
+windows-user-path:        C:\Users\Example\notes.txt
+email-address:            user@example.com

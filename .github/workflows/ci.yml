@@ -9,7 +9,7 @@ on:
 
 jobs:
   scan:
-    name: leak scan, Python ${{ matrix.python-version }}
+    name: repo tree + pipeline leak scan, Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -23,8 +23,18 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      # Nothing is installed on purpose. test_flow.py runs every tool, scans the
-      # whole surface for venue, symbol, amount, threshold, path and host names,
-      # and checks the fail-closed branch, all on the standard library alone.
-      - name: Run the pre-record leak scan
+      # Nothing is installed on purpose: both gates run on the standard library.
+
+      # Gate 1: every tracked file is screened for credential shapes, key
+      # blocks, tokens, private network addresses, machine-specific paths, and
+      # email addresses. The run also scans a planted-secret negative control
+      # and fails unless every planted pattern is caught, so this gate is
+      # demonstrably able to fail.
+      - name: Repo-wide leak scan (all tracked files + negative control)
+        run: python leak_scan.py
+
+      # Gate 2: the pipeline itself. All six tool outputs plus the system
+      # prompt are leak-scanned, the sanitizer must reproduce the expected
+      # snapshot, and the fail-closed tripwire is exercised.
+      - name: Pipeline leak gate (tools, prompt, fail-closed proof)
         run: python test_flow.py

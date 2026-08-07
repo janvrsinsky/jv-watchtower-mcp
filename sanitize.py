@@ -53,7 +53,12 @@ class SanitizationError(Exception):
 # this public repo. The denylist for private tokens is loaded from the environment.
 FORBIDDEN_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("ipv4-address", re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")),
-    ("filesystem-path", re.compile(r"(?:/[A-Za-z0-9_.\-]+){2,}")),
+    # Absolute filesystem path with two or more segments, anchored at a token
+    # start: the leading slash must not be preceded by a word character, dot,
+    # colon, slash, or dash. That excludes URL tails (host.com/a/b, https://x),
+    # dates (2026/07/14), and ratios (24/7), while a genuine absolute path
+    # ("/var/log/x", quoted or after whitespace) still matches.
+    ("filesystem-path", re.compile(r"(?<![\w:./-])/(?:[A-Za-z0-9_.\-]+/)+[A-Za-z0-9_.\-]+")),
     ("email-address", re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}")),
     ("key-shaped-hex", re.compile(r"\b[0-9a-fA-F]{16,}\b")),
     ("currency-amount", re.compile(r"[$€£¥]\s?\d")),

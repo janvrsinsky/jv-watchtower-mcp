@@ -10,6 +10,8 @@ It is the gate that must pass before a single frame is captured:
   4. The agent system prompt is leak-scanned.
   5. The tripwire is proven to fail closed: a poisoned raw pull makes the sanitizer
      raise and write nothing.
+  6. The filesystem-path screen is proven precise: it ignores URLs, dates, and
+     ratios, and still catches genuine absolute paths.
 
 On success it prints ALL CHECKS PASSED and "Safe to film" and exits 0. Any leak or
 mismatch prints FAIL and exits 1.
@@ -93,6 +95,17 @@ def main() -> int:
     except SanitizationError:
         tripped = True
     _check("poisoned raw pull is rejected (fail-closed)", tripped)
+
+    # 6. The path screen is precise: benign slashes pass, absolute paths trip.
+    benign = ("badge at https://img.shields.io/badge/python-3.11, "
+              "released 2026/07/14, uptime 24/7, see fixtures/raw_sample.json")
+    benign_hits = scan_forbidden(benign)
+    _check("path screen ignores URLs, dates, and ratios", not benign_hits,
+           "; ".join(benign_hits))
+    leaky = "component log at /var/log/fleet/engine-1.log"
+    leak_hits = scan_forbidden(leaky)
+    _check("path screen still catches absolute paths",
+           any(h.startswith("filesystem-path") for h in leak_hits))
 
     print("-" * 52)
     if _failures:
